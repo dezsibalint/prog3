@@ -1,4 +1,10 @@
+import javax.swing.*;
+import java.io.IOException;
 import java.util.Random;
+
+class NincsJatekos extends Exception {
+    NincsJatekos(String msg){ super(msg); }
+}
 
 public class asztal {
 
@@ -30,7 +36,11 @@ public class asztal {
         tet+=d;
     }
 
-    public void kor(){
+    public void kor() throws NincsJatekos, IOException {
+
+       if(jatekosok[0]==null){ throw new NincsJatekos("NincsJatekos");}
+
+        kor++;
         if(tet>goal){
             System.out.println("Vége a játéknak");
         }
@@ -38,14 +48,16 @@ public class asztal {
         int i=0;
         while (jatekosok[i]!=null){
             jatekosok[i].lep();
-            if(tet<goal) {i++; kor++; System.out.println("A tét aktuális értéke: "+tet); break;}
-            if(tet>goal*1.1){
+            if(tet<goal) {i++; System.out.println("A tét aktuális értéke: "+tet);}
+            if(tet>goal&&tet<goal*1.1){
                 System.out.println("Vége a játéknak. A győztes: "+jatekosok[i]);
+                break;
 
-            }else {
+            }if(tet>goal*1.1) {
                 System.out.println("Vége a játéknak");
             break;
             }
+
         }
 
     }
